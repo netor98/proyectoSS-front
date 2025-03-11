@@ -1,6 +1,49 @@
-import { Link } from "react-router-dom"
+import axios from "axios";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom"
 
 function Login() {
+
+	const navigate = useNavigate();
+	const [data, setData] = useState({
+		email: "",
+		password: "",
+	})
+
+	const loginUser = async (e) => {
+		e.preventDefault();
+		const { email, password } = data;
+
+
+		try {
+			const { data } = await axios.post('http://localhost:8000/api/auth/token', {
+				email, password,
+			})
+			console.log(data)
+			// console.log(data);
+			if (data.error) {
+				toast.error(data.error);
+			} else {
+				setData({ email: "", password: "" })
+				toast.success('login')
+				navigate('/dashboard')
+			}
+		} catch (error) {
+			if (error.response.status === 401) {
+				toast.error('Credenciales incorrectas', {
+					style: {
+						borderRadius: '10px',
+						background: '#333',
+						color: '#fff',
+					},
+					duration: 2700,
+				});
+				setData({ password: "" })
+			}
+		}
+	}
+
 
 	return (
 		<>
@@ -11,10 +54,11 @@ function Login() {
 				</div>
 				<h2 className="text-4xl font-semibold mb-6 font-roboto">Iniciar sesión</h2>
 
-				<form className="space-y-4">
+				<form className="space-y-4" onSubmit={loginUser}>
 					<div>
-						<label className="block text-sm font-medium text-gray-600" htmlFor="emailOrUsername">Correo electrónico</label>
-						<input id="emailOrUsername" type="text" placeholder="correo@ejemplo.com"
+						<label className="block text-sm font-medium text-gray-600" htmlFor="email">Correo electrónico</label>
+						<input id="email" type="text" placeholder="correo@ejemplo.com" value={data.email}
+							onChange={(e) => setData({ ...data, email: e.target.value })}
 							className="w-full p-2 mt-1 border-2 border-gray-300 rounded-lg bg-gray-50
 							focus:outline-none focus:ring-1 focus:border-slate-500 focus:ring-slate-500" />
 					</div>
@@ -22,7 +66,8 @@ function Login() {
 
 					<div>
 						<label className="block text-sm font-medium text-gray-600" htmlFor="password">Contraseña</label>
-						<input id="password" type="password" placeholder="*******"
+						<input id="password" type="password" placeholder="*******" value={data.password}
+							onChange={(e) => setData({ ...data, password: e.target.value })}
 							className="w-full p-2 mt-1 border-2 border-gray-300 rounded-lg bg-gray-50
 							focus:outline-none focus:ring-1 focus:border-slate-500 focus:ring-slate-500" />
 					</div>
