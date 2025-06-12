@@ -8,14 +8,15 @@ import {
   SidebarMenuItem,
 } from "../components/ui/sidebar"
 import { Command, PieChart, SquareTerminal } from "lucide-react"
-import { UserContext } from "../context/userContext";
-import { useContext } from "react";
+import { useUser } from "../context/UserContext";
 import CustomAvatar from "./CustomAvatar";
 import { NavMain } from "./NavMain";
 import { SimpleThemeToggle } from "./ThemeToggle";
-import { useTheme } from "../context/themeContext";
 import { Link } from "react-router-dom";
 
+/**
+ * @description Links in the dashboard
+ */
 const data = {
   navMain: [
     {
@@ -42,10 +43,12 @@ const data = {
     },
   ],
 }
-
+/**
+ * @description Component that shows the sidebar using shacdn
+ * @returns Component<typeof Sidebar>
+ * */
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { user } = useContext(UserContext) || { user: null };
-  const { theme } = useTheme();
+  const { user } = useUser() || { user: null };
 
   return (
     <Sidebar
@@ -66,11 +69,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <span className="truncate font-semibold text-sidebar-foreground">Sistema Académico</span>
                   <span className="truncate text-xs text-sidebar-foreground/70">Investigación</span>
                 </div>
-                <div className="ml-auto">
-                  <SimpleThemeToggle />
-                </div>
               </Link>
+
             </SidebarMenuButton>
+
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>

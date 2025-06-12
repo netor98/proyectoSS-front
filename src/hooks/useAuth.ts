@@ -23,17 +23,18 @@ export const useAuth = () => {
   /**
    * Checks current authentication status
    */
-  const checkAuth = useCallback(async (): Promise<void> => {
-    try {
-      setLoading(true);
-      const userData = await authService.getProfile();
-      setUser(userData);
-    } catch (error) {
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  // const checkAuth = useCallback(async (): Promise<void> => {
+  //   try {
+  //     console.log("checkAuth")
+  //     setLoading(true);
+  //     const userData = await authService.getProfile();
+  //     setUser(userData);
+  //   } catch (error) {
+  //     setUser(null);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, []);
 
   /**
    * Refreshes the access token
@@ -91,7 +92,7 @@ export const useAuth = () => {
     user,
     loading,
     isRefreshing,
-    checkAuth,
+    // checkAuth,
     refreshToken,
     logout,
     login,

@@ -2,6 +2,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { SidebarTrigger } from "./ui/sidebar"
 import { Separator } from "./ui/separator"
 import { useLocation, Link } from "react-router-dom"
+import { SimpleThemeToggle } from "./ThemeToggle"
 
 // Route labels mapping
 const routeLabels: Record<string, string> = {
@@ -83,10 +84,11 @@ export function CustomBreadCrumb() {
             ))}
           </BreadcrumbList>
         </Breadcrumb>
+
       </div>
-      {/* <div className="ml-auto pr-4">
+      <div className="ml-auto pr-4">
         <SimpleThemeToggle />
-      </div> */}
+      </div>
     </header>
   )
 }

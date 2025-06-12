@@ -1,13 +1,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { UserContext } from "../context/userContext";
-import { useContext } from "react";
+import { useUser } from "../context/UserContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { LogOutIcon, UserIcon } from "lucide-react";
 import { useSidebar } from "./ui/sidebar";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { uploadService } from "../services/uploadService";
 
 export default function CustomAvatar() {
-  const { user, logout } = useContext(UserContext);
+  const { user, logout } = useUser();
   const { state } = useSidebar();
   const navigate = useNavigate();
   const isCollapsed = state === "collapsed";
@@ -16,14 +17,28 @@ export default function CustomAvatar() {
     navigate('/profile');
   };
 
+  const getAvatar = () => {
+    return uploadService.getAvatarUrl(user?.avatar);
+  }
+
+  // const getPhoto = () => {
+  //   if (!user?.avatar) return;
+  //
+  //
+  //     const authResponse = await axios.post<LoginResponse>(
+  //       `${API_BASE_URL}/auth/token`,
+  //       { email, password },
+  //       { withCredentials: true }
+  //     );
+  // }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className={`flex items-center gap-2 cursor-pointer hover:bg-sidebar-accent rounded-md p-2 transition-all duration-300 w-full ${
-          isCollapsed ? 'justify-center' : ''
-        }`}>
+        <div className={`flex items-center gap-2 cursor-pointer hover:bg-sidebar-accent rounded-md p-2 transition-all duration-300 w-full ${isCollapsed ? 'justify-center' : ''
+          }`}>
           <Avatar className={isCollapsed ? 'h-6 w-6' : ''}>
-            <AvatarImage src={user?.avatar} />
+            <AvatarImage src={getAvatar()} />
             <AvatarFallback>{user?.first_names?.charAt(0)}</AvatarFallback>
           </Avatar>
           {!isCollapsed && (

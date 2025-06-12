@@ -7,9 +7,8 @@ import AuthLayout from './layouts/AuthLayout'
 import Dashboard from './pages/dashboard/Dashboard'
 import EditProfile from './pages/profile/EditProfile'
 import { Toaster } from 'react-hot-toast'
-import { UserContextProvider } from './context/userContext'
 import { ThemeProvider } from './context/themeContext'
-import ProtectedRoutes from './utils/ProtectedRoutes'
+// import ProtectedRoutes from './utils/ProtectedRoutes'
 import { SidebarProvider } from './components/ui/sidebar'
 import { AppSidebar } from './components/AppSideBar'
 import PageOne from './pages/testingPages/PageOne'
@@ -18,11 +17,11 @@ function App() {
   // const [count, setCount] = useState(0)
 
   return (
-    <ThemeProvider>
-      <UserContextProvider>
+    <>
+      <ThemeProvider>
         <Toaster position='top-right' toastOptions={{ duration: 2000 }} />
         <Routes>
-          <Route element={<ProtectedRoutes />}>
+          <Route>
             <Route path="/dashboard" element={
               <SidebarProvider>
                 <AppSidebar />
@@ -49,12 +48,15 @@ function App() {
             } />
           </Route>
 
+
           <Route path="/" element={<Home />} />
           <Route path="/auth/login" element={<AuthLayout> <Login /> </AuthLayout>} />
           <Route path="/auth/register" element={<AuthLayout> <Register /> </AuthLayout>} />
         </Routes>
-      </UserContextProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+
+    </>
+
   )
 }
 
