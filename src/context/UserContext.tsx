@@ -63,6 +63,13 @@ export function UserProvider({ children }: { children: ReactNode }) {
   // Check authentication status on app load
   useEffect(() => {
     const checkAuthStatus = async () => {
+      // Skip auth check if we're already on login/register pages
+      const currentPath = window.location.pathname;
+      if (currentPath === '/auth/login' || currentPath === '/auth/register') {
+        setIsLoading(false);
+        return;
+      }
+
       try {
         const userData = await authService.checkAuth();
         if (userData) {
@@ -98,17 +105,15 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
-      setIsLoading(true);
       const { user: userData } = await authService.login(email, password);
+
       const mappedUser = mapUserData(userData);
 
       setUser(mappedUser);
       setIsAuthenticated(true);
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error('UserContext: Login failed:', error);
       throw error;
-    } finally {
-      setIsLoading(false);
     }
   };
 

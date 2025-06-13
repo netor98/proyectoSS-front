@@ -51,6 +51,13 @@ class AuthService {
       async (error) => {
         const originalRequest = error.config;
 
+        // Don't intercept login or refresh requests - let them handle their own errors
+        if (originalRequest.url?.includes('/auth/token') ||
+            originalRequest.url?.includes('/auth/refresh') ||
+            originalRequest.url?.includes('/auth/register')) {
+          return Promise.reject(error);
+        }
+
         // Check if error is 401 and we haven't already tried to refresh
         if (error.response?.status === 401 && !originalRequest._retry) {
           if (this.isRefreshing) {
@@ -113,25 +120,42 @@ class AuthService {
    */
   async login(email: string, password: string): Promise<{ user: User; tokens: LoginResponse }> {
     try {
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
       // First, authenticate and get tokens
       const authResponse = await axios.post<LoginResponse>(
         `${API_BASE_URL}/auth/token`,
         { email, password },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          signal: controller.signal,
+          timeout: 10000
+        }
       );
 
       // Then fetch user profile
       const profileResponse = await axios.get<User>(
         `${API_BASE_URL}/auth/profile`,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          signal: controller.signal,
+          timeout: 10000
+        }
       );
+
+      clearTimeout(timeoutId);
 
       return {
         user: profileResponse.data,
         tokens: authResponse.data
       };
-    } catch (error) {
-      console.error('Login failed:', error);
+    } catch (error: any) {
+      console.error('AuthService: Login failed:', error);
+      if (error.name === 'AbortError') {
+        throw new Error('Request timeout - please try again');
+      }
       throw error;
     }
   }

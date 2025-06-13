@@ -41,7 +41,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className={`flex-1 space-y-4 p-8 pt-6 min-h-screen transition-colors duration-200 ${theme === 'dark' ? 'bg-[#080808]' : 'bg-white'
+    <div className={`flex-1 space-y-4 p-8 pt-6 min-h-screen transition-colors duration-200 ${theme === 'dark' ? 'bg-[#1a1a2e]' : 'bg-white'
       }`}>
       <CustomBreadCrumb />
 
@@ -58,8 +58,8 @@ export default function Dashboard() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {researchStats.map((stat, index) => (
           <Card key={index} className={`hover:shadow-lg transition-all duration-200 ${theme === 'dark'
-              ? 'bg-gray-800 border-gray-700 hover:shadow-gray-900/25'
-              : 'bg-white border-gray-200 hover:shadow-gray-200/50'
+            ? 'bg-gray-800 border-gray-700 hover:shadow-gray-900/25'
+            : 'bg-white border-gray-200 hover:shadow-gray-200/50'
             }`}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-100' : 'text-gray-900'

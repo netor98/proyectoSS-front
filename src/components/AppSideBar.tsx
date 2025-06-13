@@ -55,7 +55,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       variant="inset"
       {...props}
       collapsible="icon"
-      className={`border-r transition-colors duration-200`}
+      className={`transition-colors duration-200`}
     >
       <SidebarHeader>
         <SidebarMenu>
