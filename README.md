@@ -2,9 +2,7 @@
 
 ## 🎬 Demo
 
-![Demo del Sistema](./demo/demo.gif)
-
-*Vista previa del sistema en funcionamiento*
+https://github.com/user-attachments/assets/f8a56ac8-bce5-424c-b678-b323f91db36a
 
 
 ## 🛠️ Tecnologías
