@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
 import Login from './pages/auth/Login'
@@ -48,8 +48,8 @@ function App() {
             } />
           </Route>
 
+          <Route path='/' element={<Navigate to="/auth/login" replace />} />
 
-          <Route path="/" element={<Home />} />
           <Route path="/auth/login" element={<AuthLayout> <Login /> </AuthLayout>} />
           <Route path="/auth/register" element={<AuthLayout> <Register /> </AuthLayout>} />
         </Routes>
