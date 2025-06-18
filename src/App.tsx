@@ -3,6 +3,9 @@ import './App.css'
 import Home from './pages/Home'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
+import EmailVerification from './pages/auth/EmailVerification'
+import ForgotPassword from './pages/auth/ForgotPassword'
+import ResetPassword from './pages/auth/ResetPassword'
 import AuthLayout from './layouts/AuthLayout'
 import Dashboard from './pages/dashboard/Dashboard'
 import EditProfile from './pages/profile/EditProfile'
@@ -52,6 +55,9 @@ function App() {
 
           <Route path="/auth/login" element={<AuthLayout> <Login /> </AuthLayout>} />
           <Route path="/auth/register" element={<AuthLayout> <Register /> </AuthLayout>} />
+          <Route path="/auth/verify-email" element={<EmailVerification />} />
+          <Route path="/auth/forgot-password" element={<AuthLayout> <ForgotPassword /> </AuthLayout>} />
+          <Route path="/auth/reset-password" element={<ResetPassword />} />
         </Routes>
       </ThemeProvider>
 

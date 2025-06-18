@@ -164,7 +164,7 @@ function Login() {
             </label>
           </div>
           <Link
-            to="/"
+            to="/auth/forgot-password"
             className={`text-sm font-semibold no-underline link-underline transition-colors duration-200 ${theme === 'dark' ? 'text-slate-400 hover:text-slate-300' : 'text-slate-600 hover:text-slate-700'
               }`}
           >

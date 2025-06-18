@@ -198,17 +198,86 @@ class AuthService {
    */
   async logout(): Promise<void> {
     try {
-      await axios.post(
-        `${API_BASE_URL}/auth/logout`,
-        {},
+      // Call the logout endpoint
+      await axios.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true });
+
+      // Clear any stored user data
+      localStorage.removeItem('user_data');
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Even if logout fails, clear local data
+      localStorage.removeItem('user_data');
+    }
+  }
+
+  /**
+   * Verify email with token
+   */
+  async verifyEmail(token: string): Promise<{ message: string }> {
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/auth/verify-email`,
+        { token },
         { withCredentials: true }
       );
+      return response.data;
     } catch (error) {
-      console.error('Logout failed:', error);
-      // Continue with logout even if API call fails
-    } finally {
-      // Clear local storage
-      localStorage.removeItem('user_data');
+      console.error('Email verification failed:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Resend verification email
+   */
+  async resendVerificationEmail(email: string): Promise<{ message: string }> {
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/auth/resend-verification`,
+        null,
+        {
+          params: { email },
+          withCredentials: true
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Resend verification failed:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Request password reset
+   */
+  async requestPasswordReset(email: string): Promise<{ message: string }> {
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/auth/request-password-reset`,
+        { email },
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Password reset request failed:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Reset password with token
+   */
+  async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/auth/reset-password`,
+        { token, new_password: newPassword },
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Password reset failed:', error);
+      throw error;
     }
   }
 
