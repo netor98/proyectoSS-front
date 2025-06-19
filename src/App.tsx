@@ -51,13 +51,13 @@ function App() {
             } />
           </Route>
 
-          <Route path='/' element={<Navigate to="/auth/login" replace />} />
+          {/* <Route path='/' element={<Navigate to="/auth/login" replace />} />}*/}
 
           <Route path="/auth/login" element={<AuthLayout> <Login /> </AuthLayout>} />
           <Route path="/auth/register" element={<AuthLayout> <Register /> </AuthLayout>} />
-          <Route path="/auth/verify-email" element={<EmailVerification />} />
+          <Route path="/auth/verify-email" element={<AuthLayout> <EmailVerification /> </AuthLayout>} />
           <Route path="/auth/forgot-password" element={<AuthLayout> <ForgotPassword /> </AuthLayout>} />
-          <Route path="/auth/reset-password" element={<ResetPassword />} />
+          <Route path="/auth/reset-password" element={<AuthLayout> <ResetPassword /> </AuthLayout>} />
         </Routes>
       </ThemeProvider>
 

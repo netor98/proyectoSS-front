@@ -63,9 +63,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
   // Check authentication status on app load
   useEffect(() => {
     const checkAuthStatus = async () => {
-      // Skip auth check if we're already on login/register pages
       const currentPath = window.location.pathname;
-      if (currentPath === '/auth/login' || currentPath === '/auth/register') {
+      if (currentPath.startsWith("/auth")) {
         setIsLoading(false);
         return;
       }
