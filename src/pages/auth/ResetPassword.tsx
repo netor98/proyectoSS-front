@@ -19,7 +19,7 @@ const ResetPassword: React.FC = () => {
   const token = searchParams.get('token');
 
   useEffect(() => {
-    alert(token);
+    // alert(token);
     if (!token) {
       setTokenValid(false);
       toast.error('Token de recuperación no encontrado');
@@ -245,9 +245,9 @@ const ResetPassword: React.FC = () => {
 
             <Link
               to="/auth/login"
-              className={`inline-flex items-center text-sm font-semibold 
-                no-underline link-underline transition-colors 
-                duration-200 
+              className={`inline-flex items-center text-sm font-semibold
+                no-underline link-underline transition-colors
+                duration-200
                 ${theme === 'dark' ? 'text-slate-400 hover:text-slate-300' : 'text-slate-600 hover:text-slate-700'
                 }`}
             >

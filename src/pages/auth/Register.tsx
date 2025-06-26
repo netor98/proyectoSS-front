@@ -25,7 +25,6 @@ function Register() {
     confirmPassword: ""
   })
   const [errors, setErrors] = useState({
-
     first_names: "",
     last_names: "",
     email: "",
@@ -193,6 +192,13 @@ function Register() {
                   ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-slate-400'
                   : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-slate-500'
                 }`} />
+            {data.first_names && (
+              <div className={`mt-1 text-xs transition-colors duration-200`}>
+                <p className={data.first_names.trim() ? 'text-green-500' : 'text-red-500'}>
+                  • {data.first_names.trim() ? 'Nombres válidos' : 'Nombres requeridos'}
+                </p>
+              </div>
+            )}
             {errors.first_names && <p className="text-red-500 text-sm">{errors.first_names}</p>}
           </div>
 
@@ -207,7 +213,13 @@ function Register() {
                   ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-slate-400'
                   : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-slate-500'
                 }`} />
-
+            {data.last_names && (
+              <div className={`mt-1 text-xs transition-colors duration-200`}>
+                <p className={data.last_names.trim() ? 'text-green-500' : 'text-red-500'}>
+                  • {data.last_names.trim() ? 'Apellidos válidos' : 'Apellidos requeridos'}
+                </p>
+              </div>
+            )}
             {errors.last_names && <p className="text-red-500 text-sm">{errors.last_names}</p>}
           </div>
 
@@ -226,6 +238,13 @@ function Register() {
                 ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-slate-400'
                 : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-slate-500'
               }`} />
+          {data.email && (
+            <div className={`mt-1 text-xs transition-colors duration-200`}>
+              <p className={/\S+@\S+\.\S+/.test(data.email) ? 'text-green-500' : 'text-red-500'}>
+                • {/\S+@\S+\.\S+/.test(data.email) ? 'Formato de correo válido' : 'Formato de correo inválido'}
+              </p>
+            </div>
+          )}
           {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
         </div>
 
@@ -241,7 +260,13 @@ function Register() {
                   ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-slate-400'
                   : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-slate-500'
                 }`} />
-
+            {data.employee_number && (
+              <div className={`mt-1 text-xs transition-colors duration-200`}>
+                <p className={data.employee_number.trim() ? 'text-green-500' : 'text-red-500'}>
+                  • {data.employee_number.trim() ? 'Número de empleado válido' : 'Número de empleado requerido'}
+                </p>
+              </div>
+            )}
             {errors.employee_number && <p className="text-red-500 text-sm">{errors.employee_number}</p>}
           </div>
 
@@ -256,7 +281,13 @@ function Register() {
                   ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-slate-400'
                   : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-slate-500'
                 }`} />
-
+            {data.phone_number && (
+              <div className={`mt-1 text-xs transition-colors duration-200`}>
+                <p className={/^\d{10}$/.test(data.phone_number) ? 'text-green-500' : 'text-red-500'}>
+                  • {/^\d{10}$/.test(data.phone_number) ? 'Número telefónico válido (10 dígitos)' : `Debe tener exactamente 10 dígitos (${data.phone_number.length}/10)`}
+                </p>
+              </div>
+            )}
             {errors.phone_number && <p className="text-red-500 text-sm">{errors.phone_number}</p>}
           </div>
 
@@ -289,6 +320,28 @@ function Register() {
               {showPassword ? <EyeOff /> : <EyeIcon />}
 
             </div>
+            {data.hashed_password && (
+              <div className={`mt-2 text-xs transition-colors duration-200 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                <p>Tu contraseña debe contener:</p>
+                <ul className="mt-1 space-y-1">
+                  <li className={data.hashed_password.length >= 8 ? 'text-green-500' : 'text-red-500'}>
+                    • Al menos 8 caracteres
+                  </li>
+                  <li className={/(?=.*[a-z])/.test(data.hashed_password) ? 'text-green-500' : 'text-red-500'}>
+                    • Una letra minúscula
+                  </li>
+                  <li className={/(?=.*[A-Z])/.test(data.hashed_password) ? 'text-green-500' : 'text-red-500'}>
+                    • Una letra mayúscula
+                  </li>
+                  <li className={/(?=.*\d)/.test(data.hashed_password) ? 'text-green-500' : 'text-red-500'}>
+                    • Un número
+                  </li>
+                  <li className={/(?=.*[@$!%*?&])/.test(data.hashed_password) ? 'text-green-500' : 'text-red-500'}>
+                    • Un carácter especial (@$!%*?&)
+                  </li>
+                </ul>
+              </div>
+            )}
             {errors.hashed_password.length > 0 && (
               <ul className="text-red-500 text-sm mt-1 space-y-1">
                 {errors.hashed_password.map((err, i) => (
@@ -312,7 +365,13 @@ function Register() {
                 ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-slate-400'
                 : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-slate-500'
               }`} />
-
+          {data.confirmPassword && (
+            <div className={`mt-1 text-xs transition-colors duration-200`}>
+              <p className={data.confirmPassword === data.hashed_password && data.confirmPassword ? 'text-green-500' : 'text-red-500'}>
+                • {data.confirmPassword === data.hashed_password && data.confirmPassword ? 'Las contraseñas coinciden' : 'Las contraseñas no coinciden'}
+              </p>
+            </div>
+          )}
 
         </div>
 
